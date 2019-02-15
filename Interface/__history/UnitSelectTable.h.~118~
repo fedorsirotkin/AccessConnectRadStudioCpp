@@ -1,0 +1,270 @@
+//---------------------------------------------------------------------------
+
+#ifndef UnitSelectTableH
+#define UnitSelectTableH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.Menus.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.ComCtrls.hpp>
+//---------------------------------------------------------------------------
+class TFormMain : public TForm
+{
+__published:	// IDE-managed Components
+	TMainMenu *MainMenu;
+	TMenuItem *NAbout;
+	TADOConnection *ADOConnectionDB;
+	TMenuItem *NBuildGraph;
+	TMenuItem *Debug;
+	TCheckBox *CheckBoxReadOnly;
+	TMenuItem *NAboutProgram;
+	TMenuItem *NAboutAuthor;
+	TMenuItem *NSearchByFilm;
+	TLabel *LabelTitle;
+	TMenuItem *NTicketOrder;
+	TBitBtn *BitBtnExitProgram;
+	TPageControl *PageControlTables;
+	TTabSheet *TabSheetGenres;
+	TTabSheet *TabSheetFilmGenres;
+	TTabSheet *TabSheetHalls;
+	TTabSheet *TabSheetFilmCompanies;
+	TTabSheet *TabSheetCinemas;
+	TTabSheet *TabSheetPlaces;
+	TTabSheet *TabSheetTicketSelling;
+	TTabSheet *TabSheetMovieRental;
+	TTabSheet *TabSheetSessionSchedule;
+	TTabSheet *TabSheetDirectors;
+	TTabSheet *TabSheetRows;
+	TTabSheet *TabSheetCountriesProduction;
+	TTabSheet *TabSheetTypesPlaces;
+	TTabSheet *TabSheetFilms;
+	TDBGrid *DBGridGenres;
+	TDBGrid *DBGridFilmGenres;
+	TDBGrid *DBGridHalls;
+	TDBGrid *DBGridFilmCompanies;
+	TDBGrid *DBGridCinemas;
+	TDBGrid *DBGridPlaces;
+	TDBGrid *DBGridTicketSelling;
+	TDBGrid *DBGridMovieRental;
+	TDBGrid *DBGridSessionSchedule;
+	TDBGrid *DBGridDirectors;
+	TDBGrid *DBGridRows;
+	TDBGrid *DBGridCountriesProduction;
+	TDBGrid *DBGridTypesPlaces;
+	TDBGrid *DBGridFilms;
+	TDBNavigator *DBNavigatorGenres;
+	TDBNavigator *DBNavigatorFilmGenres;
+	TDBNavigator *DBNavigatorHalls;
+	TDBNavigator *DBNavigatorFilmCompanies;
+	TDBNavigator *DBNavigatorCinemas;
+	TDBNavigator *DBNavigatorPlaces;
+	TDBNavigator *DBNavigatorTicketSelling;
+	TDBNavigator *DBNavigatorMovieRental;
+	TDBNavigator *DBNavigatorSessionSchedule;
+	TDBNavigator *DBNavigatorDirectors;
+	TDBNavigator *DBNavigatorRows;
+	TDBNavigator *DBNavigatorCountriesProduction;
+	TDBNavigator *DBNavigatorTypesPlaces;
+	TDBNavigator *DBNavigatorFilms;
+	TADOTable *ADOTableGenres;
+	TDataSource *DataSourceGenres;
+	TADOTable *ADOTableFilmGenres;
+	TDataSource *DataSourceFilmGenres;
+	TADOTable *ADOTableHalls;
+	TADOTable *ADOTableFilmCompanies;
+	TADOTable *ADOTableCinemas;
+	TADOTable *ADOTablePlaces;
+	TADOTable *ADOTableTicketSelling;
+	TADOTable *ADOTableMovieRental;
+	TADOTable *ADOTableSessionSchedule;
+	TADOTable *ADOTableDirectors;
+	TADOTable *ADOTableRows;
+	TADOTable *ADOTableCountriesProduction;
+	TADOTable *ADOTableTypesPlaces;
+	TADOTable *ADOTableFilms;
+	TDataSource *DataSourceHalls;
+	TDataSource *DataSourceFilmCompanies;
+	TDataSource *DataSourceCinemas;
+	TDataSource *DataSourcePlaces;
+	TDataSource *DataSourceTicketSelling;
+	TDataSource *DataSourceMovieRental;
+	TDataSource *DataSourceSessionSchedule;
+	TDataSource *DataSourceDirectors;
+	TDataSource *DataSourceRows;
+	TDataSource *DataSourceCountriesProduction;
+	TDataSource *DataSourceTypesPlaces;
+	TDataSource *DataSourceFilms;
+	TIntegerField *ADOTableFilmGenresÆàíğ;
+	TIntegerField *ADOTableFilmGenresÔèëüì;
+	TAutoIncField *ADOTableGenresÈÄ;
+	TWideStringField *ADOTableGenresÍàèìåíîâàíèå;
+	TStringField *ADOTableFilmGenresÆàíğLookup;
+	TStringField *ADOTableFilmGenresÔèëüìLookup;
+	TAutoIncField *ADOTableHallsÈÄ;
+	TWideStringField *ADOTableHallsÍàèìåíîâàíèå;
+	TWideStringField *ADOTableHallsÑîñòîÿíèå;
+	TIntegerField *ADOTableHallsÂìåñòèìîñòü;
+	TIntegerField *ADOTableHallsÊèíîòåàòğ;
+	TStringField *ADOTableHallsÊèíîòåàòğLookup;
+	TAutoIncField *ADOTableFilmCompaniesÈÄ;
+	TWideStringField *ADOTableFilmCompaniesÍàèìåíîâàíèå;
+	TAutoIncField *ADOTableCinemasÈÄ;
+	TWideStringField *ADOTableCinemasÍàèìåíîâàíèå;
+	TWideStringField *ADOTableCinemasÀäğåñ;
+	TWideStringField *ADOTableCinemasÒåëåôîí;
+	TWideStringField *ADOTableCinemasÑàéò;
+	TIntegerField *ADOTableCinemasÂìåñòèìîñòü;
+	TAutoIncField *ADOTablePlacesÈÄ;
+	TSmallintField *ADOTablePlacesÍîìåğ;
+	TIntegerField *ADOTablePlacesĞÿä;
+	TIntegerField *ADOTablePlacesÒèïìåñòà;
+	TIntegerField *ADOTablePlacesÖåíà;
+	TStringField *ADOTablePlacesĞÿäLookup;
+	TStringField *ADOTablePlacesÒèïìåñòàLookup;
+	TAutoIncField *ADOTableTicketSellingÈÄ;
+	TIntegerField *ADOTableTicketSellingÑåàíñ;
+	TIntegerField *ADOTableTicketSellingÌåñòî;
+	TStringField *ADOTableTicketSellingÑåàíñLookup;
+	TAutoIncField *ADOTableMovieRentalÈÄ;
+	TDateTimeField *ADOTableMovieRentalÂûõîäâïğîêàò;
+	TDateTimeField *ADOTableMovieRentalÑíÿòèåñïğîêàòà;
+	TIntegerField *ADOTableMovieRentalÔèëüì;
+	TStringField *ADOTableMovieRentalÔèëüìLookup;
+	TAutoIncField *ADOTableSessionScheduleÈÄ;
+	TIntegerField *ADOTableSessionScheduleÔèëüì;
+	TDateTimeField *ADOTableSessionScheduleÄàòà;
+	TIntegerField *ADOTableSessionScheduleÇàë;
+	TStringField *ADOTableSessionScheduleÇàëLookup;
+	TStringField *ADOTableSessionScheduleÔèëüìLookup2;
+	TAutoIncField *ADOTableDirectorsÈÄ;
+	TWideStringField *ADOTableDirectorsÍàèìåíîâàíèå;
+	TAutoIncField *ADOTableRowsÈÄ;
+	TIntegerField *ADOTableRowsÍîìåğ;
+	TIntegerField *ADOTableRowsÇàë;
+	TStringField *ADOTableRowsÇàëLookup;
+	TAutoIncField *ADOTableCountriesProductionÈÄ;
+	TWideStringField *ADOTableCountriesProductionÍàèìåíîâàíèå;
+	TAutoIncField *ADOTableTypesPlacesÈÄ;
+	TWideStringField *ADOTableTypesPlacesÍàèìåíîâàíèå;
+	TAutoIncField *ADOTableFilmsÈÄ;
+	TWideStringField *ADOTableFilmsÍàçâàíèå;
+	TIntegerField *ADOTableFilmsÃîäâûïóñêà;
+	TIntegerField *ADOTableFilmsÄëèòåëüíîñòü;
+	TWideStringField *ADOTableFilmsÎïèñàíèå;
+	TIntegerField *ADOTableFilmsÂîçğàñò;
+	TIntegerField *ADOTableFilmsÊèíîêîìïàíèÿ;
+	TIntegerField *ADOTableFilmsĞåæèññåğ;
+	TIntegerField *ADOTableFilmsÑòğàíàïğîèçâîäèòåëü;
+	TStringField *ADOTableFilmsÊèíîêîìïàíèÿLookup;
+	TStringField *ADOTableFilmsĞåæèññåğLookup2;
+	TStringField *ADOTableFilmsÑòğàíàïğîèçâîäèòåëüLookup;
+	TRadioButton *RadioButtonGenresAsc;
+	TRadioButton *RadioButtonGenresDesc;
+	TComboBox *ComboBoxGenres;
+	TComboBox *ComboBoxFilmGenres;
+	TComboBox *ComboBoxHalls;
+	TComboBox *ComboBoxFilmCompanies;
+	TComboBox *ComboBoxCinemas;
+	TComboBox *ComboBoxPlaces;
+	TComboBox *ComboBoxTicketSelling;
+	TComboBox *ComboBoxMovieRental;
+	TComboBox *ComboBoxSessionSchedule;
+	TComboBox *ComboBoxDirectors;
+	TComboBox *ComboBoxRows;
+	TComboBox *ComboBoxCountriesProduction;
+	TComboBox *ComboBoxTypesPlaces;
+	TComboBox *ComboBoxFilms;
+	TRadioButton *RadioButtonFilmGenresAsc;
+	TRadioButton *RadioButtonHallsAsc;
+	TRadioButton *RadioButtonFilmCompaniesAsc;
+	TRadioButton *RadioButtonCinemasAsc;
+	TRadioButton *RadioButtonPlacesAsc;
+	TRadioButton *RadioButtonTicketSellingAsc;
+	TRadioButton *RadioButtonMovieRentalAsc;
+	TRadioButton *RadioButtonSessionScheduleAsc;
+	TRadioButton *RadioButtonDirectorsAsc;
+	TRadioButton *RadioButtonRowsAsc;
+	TRadioButton *RadioButtonCountriesProductionAsc;
+	TRadioButton *RadioButtonTypesPlacesAsc;
+	TRadioButton *RadioButtonFilmsAsc;
+	TRadioButton *RadioButtonFilmGenresDesc;
+	TRadioButton *RadioButtonHallsDesc;
+	TRadioButton *RadioButtonFilmCompaniesDesc;
+	TRadioButton *RadioButtonCinemasDesc;
+	TRadioButton *RadioButtonPlacesDesc;
+	TRadioButton *RadioButtonTicketSellingDesc;
+	TRadioButton *RadioButtonMovieRentalDesc;
+	TRadioButton *RadioButtonSessionScheduleDesc;
+	TRadioButton *RadioButtonDirectorsDesc;
+	TRadioButton *RadioButtonRowsDesc;
+	TRadioButton *RadioButtonCountriesProductionDesc;
+	TRadioButton *RadioButtonTypesPlacesDesc;
+	TRadioButton *RadioButtonFilmsDesc;
+	void __fastcall FormCreate(TObject *Sender);
+	void __fastcall CheckBoxReadOnlyClick(TObject *Sender);
+	void __fastcall NAboutAuthorClick(TObject *Sender);
+	void __fastcall NAboutProgramClick(TObject *Sender);
+	void __fastcall NSearchByFilmClick(TObject *Sender);
+	void __fastcall NBuildGraphClick(TObject *Sender);
+	void __fastcall FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight, bool &Resize);
+	void __fastcall FormResize(TObject *Sender);
+	void __fastcall NTicketOrderClick(TObject *Sender);
+	void __fastcall BitBtnExitProgramClick(TObject *Sender);
+	void __fastcall ComboBoxGenresChange(TObject *Sender);
+	void __fastcall RadioButtonGenresAscClick(TObject *Sender);
+	void __fastcall RadioButtonGenresDescClick(TObject *Sender);
+	void __fastcall ComboBoxFilmGenresChange(TObject *Sender);
+	void __fastcall RadioButtonFilmGenresAscClick(TObject *Sender);
+	void __fastcall RadioButtonFilmGenresDescClick(TObject *Sender);
+	void __fastcall ComboBoxHallsChange(TObject *Sender);
+	void __fastcall RadioButtonHallsAscClick(TObject *Sender);
+	void __fastcall RadioButtonHallsDescClick(TObject *Sender);
+	void __fastcall ComboBoxFilmCompaniesChange(TObject *Sender);
+	void __fastcall RadioButtonFilmCompaniesAscClick(TObject *Sender);
+	void __fastcall RadioButtonFilmCompaniesDescClick(TObject *Sender);
+	void __fastcall ComboBoxCinemasChange(TObject *Sender);
+	void __fastcall RadioButtonCinemasAscClick(TObject *Sender);
+	void __fastcall RadioButtonCinemasDescClick(TObject *Sender);
+	void __fastcall ComboBoxPlacesChange(TObject *Sender);
+	void __fastcall RadioButtonPlacesAscClick(TObject *Sender);
+	void __fastcall RadioButtonPlacesDescClick(TObject *Sender);
+	void __fastcall ComboBoxTicketSellingChange(TObject *Sender);
+	void __fastcall RadioButtonTicketSellingAscClick(TObject *Sender);
+	void __fastcall RadioButtonTicketSellingDescClick(TObject *Sender);
+	void __fastcall ComboBoxMovieRentalChange(TObject *Sender);
+	void __fastcall RadioButtonMovieRentalAscClick(TObject *Sender);
+	void __fastcall RadioButtonMovieRentalDescClick(TObject *Sender);
+	void __fastcall ComboBoxSessionScheduleChange(TObject *Sender);
+	void __fastcall RadioButtonSessionScheduleAscClick(TObject *Sender);
+	void __fastcall RadioButtonSessionScheduleDescClick(TObject *Sender);
+	void __fastcall ComboBoxDirectorsChange(TObject *Sender);
+	void __fastcall RadioButtonDirectorsAscClick(TObject *Sender);
+	void __fastcall RadioButtonDirectorsDescClick(TObject *Sender);
+	void __fastcall ComboBoxRowsChange(TObject *Sender);
+	void __fastcall RadioButtonRowsAscClick(TObject *Sender);
+	void __fastcall RadioButtonRowsDescClick(TObject *Sender);
+	void __fastcall ComboBoxCountriesProductionChange(TObject *Sender);
+	void __fastcall RadioButtonCountriesProductionAscClick(TObject *Sender);
+	void __fastcall RadioButtonCountriesProductionDescClick(TObject *Sender);
+	void __fastcall ComboBoxTypesPlacesChange(TObject *Sender);
+	void __fastcall RadioButtonTypesPlacesAscClick(TObject *Sender);
+	void __fastcall RadioButtonTypesPlacesDescClick(TObject *Sender);
+
+
+private:	// User declarations
+public:		// User declarations
+	__fastcall TFormMain(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFormMain *FormMain;
+//---------------------------------------------------------------------------
+#endif

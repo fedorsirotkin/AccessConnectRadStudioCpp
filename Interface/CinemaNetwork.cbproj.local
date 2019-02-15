@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.983,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchFilm.cpp=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.313,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchFilm.cpp=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchSeanceByFilm.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.306,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSelectTable.dfm=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.035,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\ProjectCinemaNetworkPCH.h=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.123,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.764,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.983,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchFilm.h=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.314,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchFilm.h=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchSeanceByFilm.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.533,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitGraphByTicket.h=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit2.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.306,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSelectTable.cpp=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.669,=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.855,=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.165,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitTicketOrder.cpp=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.165,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitTicketOrder.h=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.533,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitGraphByTicket.dfm=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.792,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.159,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.306,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSelectTable.h=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.856,=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.165,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitTicketOrder.dfm=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.532,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitGraphByTicket.cpp=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.983,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchFilm.dfm=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.314,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchFilm.dfm=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\UnitSearchSeanceByFilm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.044,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\CinemaNetwork.cbproj=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="CinemaNetwork.cpp"/>
+    <File Path="ProjectCinemaNetworkPCH.h"/>
+    <File Path="UnitGraphByTicket.cpp"/>
+    <File Path="UnitGraphByTicket.cpp"/>
+    <File Path="UnitGraphByTicket.dfm"/>
+    <File Path="UnitGraphByTicket.h"/>
+    <File Path="UnitSearchSeanceByFilm.cpp"/>
+    <File Path="UnitSearchSeanceByFilm.cpp"/>
+    <File Path="UnitSearchSeanceByFilm.dfm"/>
+    <File Path="UnitSearchSeanceByFilm.h"/>
+    <File Path="UnitSelectTable.cpp"/>
+    <File Path="UnitSelectTable.cpp"/>
+    <File Path="UnitSelectTable.dfm"/>
+    <File Path="UnitSelectTable.h"/>
+    <File Path="UnitTicketOrder.cpp"/>
+    <File Path="UnitTicketOrder.cpp"/>
+    <File Path="UnitTicketOrder.dfm"/>
+    <File Path="UnitTicketOrder.h"/>
+  </ProjectSortOrder>
+</BorlandProject>

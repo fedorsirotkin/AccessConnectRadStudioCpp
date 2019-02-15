@@ -1,0 +1,67 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "UnitSearchFilm.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+
+#include "UnitSelectTable.h"
+
+TFormSearchFilmByCountry *FormSearchFilmByCountry;
+//---------------------------------------------------------------------------
+__fastcall TFormSearchFilmByCountry::TFormSearchFilmByCountry(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TFormSearchFilmByCountry::ButtonBackClick(TObject *Sender)
+{
+	FormSearchFilmByCountry->Hide();
+	FormMain->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormSearchFilmByCountry::FormResize(TObject *Sender)
+{
+	int width = 800;
+	if (FormMain->Width < width) {
+		FormMain->Width = width;
+	}
+	int height = 600;
+	if (FormMain->Height < height) {
+		FormMain->Height = height;
+	}
+
+	// Число элементов в таблице
+	int cntColTbl1 = DBGrid1->Columns->Count;
+	for (int i = 0; i < cntColTbl1; i++) {
+		// Ширина таблицы / Число элементов в таблице
+		DBGrid1->Columns->Items[i]->Width = ( DBGrid1->ClientWidth - 20 ) / cntColTbl1;
+	}
+
+	// Число элементов в таблице
+	int cntColTbl2 = DBGrid2->Columns->Count;
+	for (int i = 0; i < cntColTbl2; i++) {
+		// Ширина таблицы / Число элементов в таблице
+		DBGrid2->Columns->Items[i]->Width = ( DBGrid2->ClientWidth - 20 ) / cntColTbl2;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormSearchFilmByCountry::FormCanResize(TObject *Sender, int &NewWidth,
+          int &NewHeight, bool &Resize)
+{
+	int width = 800;
+	if (NewWidth < width) {
+		NewWidth = width;
+	}
+	int height = 600;
+	if (NewHeight < height) {
+		NewHeight = height;
+	}
+}
+//---------------------------------------------------------------------------
+

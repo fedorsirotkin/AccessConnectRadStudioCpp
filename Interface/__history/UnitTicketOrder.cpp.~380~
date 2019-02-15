@@ -1,0 +1,624 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "UnitSelectTable.h"
+#include "UnitTicketOrder.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+
+#include <map>
+#include <cstdio>
+
+// Фильмы, сеансы, залы, кинотеатры, ряды, типы мест, места, цены
+std::map <WideString, int> films, seances, halls, cinemas, rows, placetypes, places, prices;
+
+TFormTicketOrder *FormTicketOrder;
+//---------------------------------------------------------------------------
+
+__fastcall TFormTicketOrder::TFormTicketOrder(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::FormClose(TObject *Sender, TCloseAction &Action)
+{
+	Application->Terminate();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ButtonBackClick(TObject *Sender)
+{
+	this->Hide();
+	FormMain->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight,
+          bool &Resize)
+{
+	int width = 800;
+	if (NewWidth < width) {
+		NewWidth = width;
+	}
+	int height = 500;
+	if (NewHeight < height) {
+		NewHeight = height;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::FormResize(TObject *Sender)
+{
+	int width = 800;
+	if (FormTicketOrder->Width < width) {
+		FormTicketOrder->Width = width;
+	}
+	int height = 500;
+	if (FormTicketOrder->Height < height) {
+		FormTicketOrder->Height = height;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::FormCreate(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxFilm->Enabled = true;
+
+    // Фильмы
+	try
+	{
+		Query->SQL->Text = "SELECT [ИД], [Название] FROM [Фильмы]";
+		Query->Active = true;
+		while(!Query->Eof){
+			int id = Query->FieldByName("ИД")->AsInteger;
+			WideString name = Query->FieldByName("Название")->AsString;
+			films[name] = id;
+			ComboBoxFilm->AddItem(name, NULL);
+			Query->Next();
+		}
+	}
+    catch (Exception* e) {
+		MessageBox(NULL, PChar(WideString(e->Message)),
+			L"Exception", MB_OK|MB_ICONWARNING);
+    }
+	Query->SQL->Clear();
+
+	LabelFilmsCnt->Caption = ComboBoxFilm->Items->Count;
+
+	LabelHelper->Caption = "Выберите фильм из списка или найдите его по наименованию";
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::EditSearchFilmChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	WideString SearchFilm = "%" + EditSearchFilm->Text + "%";
+
+	// Фильмы
+	films.clear();
+	ComboBoxFilm->Clear();
+	try
+	{
+		Query->SQL->Text = "SELECT [ИД], [Название] FROM [Фильмы] WHERE [Название] LIKE :SearchFilm";
+		Query->Parameters->ParamByName("SearchFilm")->Value = SearchFilm;
+		Query->Active = true;
+		while(!Query->Eof){
+			int id = Query->FieldByName("ИД")->AsInteger;
+			WideString name = Query->FieldByName("Название")->AsString;
+			films[name] = id;
+			ComboBoxFilm->AddItem(name, NULL);
+			Query->Next();
+		}
+	}
+	catch (Exception* e) {
+		MessageBox(NULL, PChar(WideString(e->Message)),
+			L"Exception", MB_OK|MB_ICONWARNING);
+	}
+	Query->SQL->Clear();
+
+	LabelFilmsCnt->Caption = ComboBoxFilm->Items->Count;
+
+	LabelHelper->Caption = "Выберите фильм из списка или найдите его по наименованию";
+
+	ComboBoxSeance->Enabled = false;
+	ComboBoxSeance->Clear();
+	LabelSeanceCnt->Caption = "0";
+
+	ComboBoxHall->Enabled = false;
+	ComboBoxHall->Clear();
+	LabelHallCnt->Caption = "0";
+
+	ComboBoxCinema->Enabled = false;
+	ComboBoxCinema->Clear();
+	LabelCinemaCnt->Caption = "0";
+
+	ComboBoxRow->Enabled = false;
+	ComboBoxRow->Clear();
+	LabelRowCnt->Caption = "0";
+
+	ComboBoxPlace->Enabled = false;
+	ComboBoxPlace->Clear();
+	LabelPlaceCnt->Caption = "0";
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxFilmChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxSeance->Enabled = false;
+	ComboBoxSeance->Clear();
+	LabelSeanceCnt->Caption = "0";
+
+	ComboBoxHall->Enabled = false;
+	ComboBoxHall->Clear();
+	LabelHallCnt->Caption = "0";
+
+	ComboBoxCinema->Enabled = false;
+	ComboBoxCinema->Clear();
+	LabelCinemaCnt->Caption = "0";
+
+	ComboBoxRow->Enabled = false;
+	ComboBoxRow->Clear();
+	LabelRowCnt->Caption = "0";
+
+	ComboBoxPlace->Enabled = false;
+	ComboBoxPlace->Clear();
+	LabelPlaceCnt->Caption = "0";
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+
+	int itemIndex = ComboBoxFilm->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString SelectedFilm = ComboBoxFilm->Text;
+		int SelectedFilmKey = films.find(SelectedFilm)->second;
+
+		// Сеансы
+		try
+		{
+			Query->SQL->Text = "SELECT [Фильм], [Зал], [Дата] FROM [Расписание сеансов] WHERE [Фильм] = :SelectedFilmKey";
+			Query->Parameters->ParamByName("SelectedFilmKey")->Value = SelectedFilmKey;
+			Query->Active = true;
+			while(!Query->Eof){
+				int id_1 = Query->FieldByName("Зал")->AsInteger;
+				WideString name = Query->FieldByName("Дата")->AsString;
+				seances[name] = id_1;
+				seancesFilms[name] = id_2;
+				ComboBoxSeance->AddItem(name, NULL);
+				Query->Next();
+			}
+		}
+		catch (Exception* e) {
+			MessageBox(NULL, PChar(WideString(e->Message)),
+				L"Exception", MB_OK|MB_ICONWARNING);
+		}
+		Query->SQL->Clear();
+
+		LabelSeanceCnt->Caption = ComboBoxSeance->Items->Count;
+
+		LabelHelper->Caption = "Выберите сеанс из выпадающего списка";
+
+		ComboBoxSeance->Enabled = true;
+	} else {
+		ComboBoxSeance->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxSeanceChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxHall->Enabled = false;
+	ComboBoxHall->Clear();
+	LabelHallCnt->Caption = "0";
+
+	ComboBoxCinema->Enabled = false;
+	ComboBoxCinema->Clear();
+	LabelCinemaCnt->Caption = "0";
+
+	ComboBoxRow->Enabled = false;
+	ComboBoxRow->Clear();
+	LabelRowCnt->Caption = "0";
+
+	ComboBoxPlace->Enabled = false;
+	ComboBoxPlace->Clear();
+	LabelPlaceCnt->Caption = "0";
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+
+	int itemIndex = ComboBoxSeance->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString SelectedSeance = ComboBoxSeance->Text;
+		int SelectedSeanceKey = seances.find(SelectedSeance)->second;
+
+		// Залы
+		try
+		{
+			Query->SQL->Text = "SELECT [Кинотеатр], [Наименование] FROM [Залы] WHERE [ИД] = :SelectedSeanceKey";
+			Query->Parameters->ParamByName("SelectedSeanceKey")->Value = SelectedSeanceKey;
+			Query->Active = true;
+			while(!Query->Eof){
+				int id = Query->FieldByName("Кинотеатр")->AsInteger;
+				WideString name = Query->FieldByName("Наименование")->AsString;
+				halls[name] = id;
+				ComboBoxHall->AddItem(name, NULL);
+				Query->Next();
+			}
+		}
+		catch (Exception* e) {
+			MessageBox(NULL, PChar(WideString(e->Message)),
+				L"Exception", MB_OK|MB_ICONWARNING);
+		}
+		Query->SQL->Clear();
+
+		LabelHallCnt->Caption = ComboBoxHall->Items->Count;
+
+		LabelHelper->Caption = "Выберите зал из выпадающего списка";
+
+		ComboBoxHall->Enabled = true;
+	} else {
+		ComboBoxHall->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxHallChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxCinema->Enabled = false;
+	ComboBoxCinema->Clear();
+	LabelCinemaCnt->Caption = "0";
+
+	ComboBoxRow->Enabled = false;
+	ComboBoxRow->Clear();
+	LabelRowCnt->Caption = "0";
+
+	ComboBoxPlace->Enabled = false;
+	ComboBoxPlace->Clear();
+	LabelPlaceCnt->Caption = "0";
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+
+	int itemIndex = ComboBoxHall->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString SelectedHall = ComboBoxHall->Text;
+		int SelectedHallKey = halls.find(SelectedHall)->second;
+
+		// Кинотеатры
+		try
+		{
+			Query->SQL->Text = "SELECT [ИД], [Наименование] FROM [Кинотеатры] WHERE [ИД] = :SelectedHallKey";
+			Query->Parameters->ParamByName("SelectedHallKey")->Value = SelectedHallKey;
+			Query->Active = true;
+			while(!Query->Eof){
+				int id = Query->FieldByName("ИД")->AsInteger;
+				WideString name = Query->FieldByName("Наименование")->AsString;
+				cinemas[name] = id;
+				ComboBoxCinema->AddItem(name, NULL);
+				Query->Next();
+			}
+		}
+		catch (Exception* e) {
+			MessageBox(NULL, PChar(WideString(e->Message)),
+				L"Exception", MB_OK|MB_ICONWARNING);
+		}
+		Query->SQL->Clear();
+
+		LabelCinemaCnt->Caption = ComboBoxCinema->Items->Count;
+
+		LabelHelper->Caption = "Выберите кинотеатр из выпадающего списка";
+
+		ComboBoxCinema->Enabled = true;
+	} else {
+		ComboBoxCinema->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxCinemaChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxRow->Enabled = false;
+	ComboBoxRow->Clear();
+	LabelRowCnt->Caption = "0";
+
+	ComboBoxPlace->Enabled = false;
+	ComboBoxPlace->Clear();
+	LabelPlaceCnt->Caption = "0";
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+
+	int itemIndex = ComboBoxHall->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString SelectedHall = ComboBoxHall->Text;
+		int SelectedHallKey = halls.find(SelectedHall)->second;
+
+		// Ряды
+		try
+		{
+			Query->SQL->Text = "SELECT [ИД], [Номер] FROM [Ряды] WHERE [Зал] = :SelectedHallKey";
+			Query->Parameters->ParamByName("SelectedHallKey")->Value = SelectedHallKey;
+			Query->Active = true;
+			while(!Query->Eof){
+				int id = Query->FieldByName("ИД")->AsInteger;
+				WideString name = Query->FieldByName("Номер")->AsString;
+				rows[name] = id;
+				ComboBoxRow->AddItem(name, NULL);
+				Query->Next();
+			}
+		}
+		catch (Exception* e) {
+			MessageBox(NULL, PChar(WideString(e->Message)),
+				L"Exception", MB_OK|MB_ICONWARNING);
+		}
+		Query->SQL->Clear();
+
+		LabelRowCnt->Caption = ComboBoxRow->Items->Count;
+
+		LabelHelper->Caption = "Выберите ряд из выпадающего списка";
+
+		ComboBoxRow->Enabled = true;
+	} else {
+		ComboBoxRow->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxRowChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxPlace->Enabled = false;
+	ComboBoxPlace->Clear();
+	LabelPlaceCnt->Caption = "0";
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+
+	int itemIndex = ComboBoxRow->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString SelectedRow = ComboBoxRow->Text;
+		int SelectedRowKey = rows.find(SelectedRow)->second;
+
+		// Места
+		try
+		{
+			Query->SQL->Text = "SELECT [ИД], [Тип места], [Цена], [Номер] FROM [Места] WHERE [Ряд] = :SelectedRowKey";
+			Query->Parameters->ParamByName("SelectedRowKey")->Value = SelectedRowKey;
+			Query->Active = true;
+			while(!Query->Eof){
+				int id_1 = Query->FieldByName("ИД")->AsInteger;
+				int id_2 = Query->FieldByName("Тип места")->AsInteger;
+				int id_3 = Query->FieldByName("Цена")->AsInteger;
+				WideString name = Query->FieldByName("Номер")->AsString;
+				places[name] = id_1;
+				placetypes[name] = id_2;
+				prices[name] = id_3;
+				ComboBoxPlace->AddItem(name, NULL);
+				Query->Next();
+			}
+		}
+		catch (Exception* e) {
+			MessageBox(NULL, PChar(WideString(e->Message)),
+				L"Exception", MB_OK|MB_ICONWARNING);
+		}
+		Query->SQL->Clear();
+
+		LabelPlaceCnt->Caption = ComboBoxPlace->Items->Count;
+
+		LabelHelper->Caption = "Выберите место из выпадающего списка";
+
+		ComboBoxPlace->Enabled = true;
+	} else {
+		ComboBoxPlace->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxPlaceChange(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	ComboBoxPlaceType->Enabled = false;
+	ComboBoxPlaceType->Clear();
+	LabelPlaceTypeCnt->Caption = "0";
+
+	RichEditSalesReceipt->Lines->Clear();
+	ButtonPrintSalesReceipt->Enabled = false;
+	ButtonInsertTicket->Enabled = false;
+
+	int itemIndex = ComboBoxPlace->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString SelectedPlace = ComboBoxPlace->Text;
+		int SelectedPlaceTypeKey = placetypes.find(SelectedPlace)->second;
+
+		// Типы мест
+		try
+		{
+			Query->SQL->Text = "SELECT [Наименование] FROM [Типы мест] WHERE [ИД] = :SelectedPlaceTypeKey";
+			Query->Parameters->ParamByName("SelectedPlaceTypeKey")->Value = SelectedPlaceTypeKey;
+			Query->Active = true;
+			while(!Query->Eof){
+				WideString name = Query->FieldByName("Наименование")->AsString;
+
+				ComboBoxPlaceType->AddItem(name, NULL);
+				Query->Next();
+			}
+		}
+		catch (Exception* e) {
+			MessageBox(NULL, PChar(WideString(e->Message)),
+				L"Exception", MB_OK|MB_ICONWARNING);
+		}
+		Query->SQL->Clear();
+
+		LabelPlaceTypeCnt->Caption = ComboBoxPlaceType->Items->Count;
+
+		LabelHelper->Caption = "Выберите тип места из выпадающего списка";
+
+		ComboBoxPlaceType->Enabled = true;
+	} else {
+		ComboBoxPlaceType->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormTicketOrder::ComboBoxPlaceTypeChange(TObject *Sender)
+{
+	int itemIndex = ComboBoxPlace->ItemIndex;
+	if (itemIndex >= 0) {
+		WideString place = ComboBoxPlace->Text;
+		int price = prices.find(place)->second;
+
+		LabelHelper->Caption = "Цена билета составляет: " + IntToStr(price) + " руб.";
+
+		// Печать отчета
+		TVarRec vr[1];
+		WideString s;
+		RichEditSalesReceipt->Lines->Clear();
+		RichEditSalesReceipt->Lines->Add(" ------------------------------------- ");
+
+		s = ComboBoxFilm->Text;
+		vr[0] = s;
+		s = Format("| Фильм: %28.28s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = ComboBoxCinema->Text;
+		vr[0] = s;
+		s = Format("| Кинотеатр: %24.24s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = ComboBoxSeance->Text;
+		vr[0] = s;
+		s = Format("| Сеанс: %28.28s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = ComboBoxHall->Text;
+		vr[0] = s;
+		s = Format("| Зал: %30.30s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = ComboBoxRow->Text;
+		vr[0] = s;
+		s = Format("| Ряд: %30.30s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = ComboBoxPlace->Text;
+		vr[0] = s;
+		s = Format("| Место: %28.28s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = ComboBoxPlaceType->Text;
+		vr[0] = s;
+		s = Format("| Тип места: %24.24s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		s = IntToStr(price);
+		vr[0] = s;
+		s = Format("| Цена: %29.29s |", vr, 1);
+		RichEditSalesReceipt->Lines->Add(s);
+
+		RichEditSalesReceipt->Lines->Add(" -------- СПАСИБО ЗА ПОКУПКУ! -------- ");
+
+		ComboBoxPlaceType->Enabled = true;
+		ButtonPrintSalesReceipt->Enabled = true;
+		ButtonInsertTicket->Enabled = true;
+	} else {
+		ComboBoxPlaceType->Enabled = false;
+		ButtonPrintSalesReceipt->Enabled = false;
+		ButtonInsertTicket->Enabled = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFormTicketOrder::ButtonPrintSalesReceiptClick(TObject *Sender)
+{
+	if (PrintDialogSalesReceipt->Execute()) {
+		RichEditSalesReceipt->Print("Документ");
+	}
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TFormTicketOrder::ButtonInsertTicketClick(TObject *Sender)
+{
+	TADOQuery* Query = ADOQuerySelect;
+	Query->Active = false;
+
+	// Типы мест
+	try
+	{
+		WideString seanceStr = ComboBoxSeance->Text;
+		int seance = seances.find(seanceStr)->second;
+		WideString placeStr = ComboBoxPlace->Text;
+		int place = places.find(placeStr)->second;
+		Query->SQL->Text = "INSERT INTO [Продажа билетов] ( [Сеанс], [Место] ) VALUES ( :seance, :place )";
+		Query->Parameters->ParamByName("seance")->Value = seance;
+		Query->Parameters->ParamByName("place")->Value = place;
+		// Query->ExecSQL();
+		Application->MessageBox(L"Запись добавлена в базу. Не забудьте распечатать товарный чек клиенту.", L"Запись добавлена!", MB_OK);
+	}
+	catch (Exception* e) {
+		MessageBox(NULL, PChar(WideString(e->Message)),
+			L"Exception", MB_OK|MB_ICONWARNING);
+	}
+	Query->SQL->Clear();
+}
+//---------------------------------------------------------------------------
+

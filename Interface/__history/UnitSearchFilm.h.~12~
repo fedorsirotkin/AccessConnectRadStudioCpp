@@ -1,0 +1,43 @@
+//---------------------------------------------------------------------------
+
+#ifndef UnitSearchFilmH
+#define UnitSearchFilmH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.Grids.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+//---------------------------------------------------------------------------
+class TFormSearchFilmByCountry : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *ButtonBack;
+	TDBGrid *DBGrid1;
+	TDBGrid *DBGrid2;
+	TDBNavigator *DBNavigator1;
+	TDBNavigator *DBNavigator2;
+	TADOConnection *ADOConnectionDB;
+	TADOTable *ADOTableSeance;
+	TDataSource *DataSourceSeance;
+	TADOTable *ADOTableFilms;
+	TDataSource *DataSourceFilms;
+	TLabel *Label1;
+	void __fastcall ButtonBackClick(TObject *Sender);
+	void __fastcall FormResize(TObject *Sender);
+	void __fastcall FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight, bool &Resize);
+	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+
+private:	// User declarations
+public:		// User declarations
+	__fastcall TFormSearchFilmByCountry(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFormSearchFilmByCountry *FormSearchFilmByCountry;
+//---------------------------------------------------------------------------
+#endif

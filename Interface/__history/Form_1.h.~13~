@@ -1,0 +1,57 @@
+//---------------------------------------------------------------------------
+
+#ifndef Form_1H
+#define Form_1H
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.Mask.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.Menus.hpp>
+//---------------------------------------------------------------------------
+class TMainForm : public TForm
+{
+__published:	// IDE-managed Components
+	TADOConnection *ADOConnectionFilmLibrary;
+	TADOTable *ADOTable2;
+	TDataSource *DataSource2;
+	TDBGrid *DBGridCinemas;
+	TDBEdit *DBEdit1;
+	TADOQuery *ADOQuery1;
+	TBitBtn *FirstBTN;
+	TMainMenu *MainMenu1;
+	TMenuItem *ItemMenu1;
+	TMenuItem *ItemMenu2;
+	TMenuItem *N111;
+	TMenuItem *N211;
+	TAutoIncField *ADOTable2Номер;
+	TWideStringField *ADOTable2Название;
+	TIntegerField *ADOTable2Годвыпуска;
+	TIntegerField *ADOTable2Длительность;
+	TWideMemoField *ADOTable2Описание;
+	TIntegerField *ADOTable2Возраст;
+	TIntegerField *ADOTable2Кинокомпания;
+	TIntegerField *ADOTable2Режиссер;
+	TIntegerField *ADOTable2Странапроизводитель;
+	TADOQuery *ADOQuery2;
+	TStringField *ADOTable2MyField;
+	TDBGrid *DBGrid1;
+	TADOTable *ADOTable1;
+	TDataSource *DataSource1;
+	void __fastcall ItemMenu2Click(TObject *Sender);
+	void __fastcall FirstBTNClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TMainForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TMainForm *MainForm;
+//---------------------------------------------------------------------------
+#endif

@@ -1,0 +1,48 @@
+//---------------------------------------------------------------------------
+
+#ifndef CinemaH
+#define CinemaH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.Mask.hpp>
+//---------------------------------------------------------------------------
+class TMainForm : public TForm
+{
+__published:	// IDE-managed Components
+	TADOConnection *ADOConnectionFilmLibrary;
+	TADOTable *TableCinemas;
+	TDataSource *DataSourceCinemas;
+	TDBGrid *DBGridCinemas;
+	TDBEdit *DBEdit1;
+	TAutoIncField *TableCinemasНомер;
+	TWideStringField *TableCinemasНаименование;
+	TWideStringField *TableCinemasАдрес;
+	TWideStringField *TableCinemasТелефон;
+	TWideStringField *TableCinemasСайт;
+	TIntegerField *TableCinemasВместимость;
+	TADOQuery *ADOQuery1;
+	TAutoIncField *ADOQuery1Номер;
+	TWideStringField *ADOQuery1Название;
+	TIntegerField *ADOQuery1Годвыпуска;
+	TIntegerField *ADOQuery1Длительность;
+	TWideMemoField *ADOQuery1Описание;
+	TIntegerField *ADOQuery1Возраст;
+	TIntegerField *ADOQuery1Кинокомпания;
+	TIntegerField *ADOQuery1Режиссер;
+	TIntegerField *ADOQuery1Странапроизводитель;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TMainForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TMainForm *MainForm;
+//---------------------------------------------------------------------------
+#endif

@@ -1,0 +1,44 @@
+//---------------------------------------------------------------------------
+
+#ifndef UnitGraphByTicketH
+#define UnitGraphByTicketH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Grids.hpp>
+#include <VCLTee.Chart.hpp>
+#include <VCLTee.DBChart.hpp>
+#include <VclTee.TeeGDIPlus.hpp>
+#include <VCLTee.TeEngine.hpp>
+#include <VCLTee.TeeProcs.hpp>
+#include <VCLTee.Series.hpp>
+//---------------------------------------------------------------------------
+class TFormGraphByTicketSales : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *Button1;
+	TDBChart *DBChart1;
+	TDBGrid *DBGridTicketSelling;
+	TDBNavigator *DBNavigator1;
+	TADOConnection *ADOConnectionDB;
+	TADOQuery *ADOQueryTicketSelling;
+	TDataSource *DataSourceTicketSelling;
+	TBarSeries *Series1;
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight, bool &Resize);
+
+private:	// User declarations
+public:		// User declarations
+	__fastcall TFormGraphByTicketSales(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFormGraphByTicketSales *FormGraphByTicketSales;
+//---------------------------------------------------------------------------
+#endif

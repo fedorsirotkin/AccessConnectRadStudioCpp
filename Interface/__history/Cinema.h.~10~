@@ -1,0 +1,38 @@
+//---------------------------------------------------------------------------
+
+#ifndef CinemaH
+#define CinemaH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.Mask.hpp>
+//---------------------------------------------------------------------------
+class TMainForm : public TForm
+{
+__published:	// IDE-managed Components
+	TADOConnection *ADOConnectionFilmLibrary;
+	TADOTable *TableCinemas;
+	TDataSource *DataSourceCinemas;
+	TDBGrid *DBGridCinemas;
+	TDBEdit *DBEdit1;
+	TAutoIncField *TableCinemasÍîìåğ;
+	TWideStringField *TableCinemasÍàèìåíîâàíèå;
+	TWideStringField *TableCinemasÀäğåñ;
+	TWideStringField *TableCinemasÒåëåôîí;
+	TWideStringField *TableCinemasÑàéò;
+	TIntegerField *TableCinemasÂìåñòèìîñòü;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TMainForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TMainForm *MainForm;
+//---------------------------------------------------------------------------
+#endif

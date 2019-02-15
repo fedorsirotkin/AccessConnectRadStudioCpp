@@ -1,0 +1,6 @@
+#include <vcl.h>
+#include <tchar.h>
+
+// Строка подключения
+extern const WideString ConnectionString = "Provider=MSDASQL.1;Password=\"\";Persist Security Info=True;Data Source=CinemaNetwork;Extended Properties=\"DSN=CinemaNetwork;DBQ=E:\\VCS\\BitBucket\\accessconnectradstudiocpp\\DBase\\CinemaNetwork.accdb;DriverId=25;FIL=MS Access;MaxBufferSize=2048;PageTimeout=5;\"";
+

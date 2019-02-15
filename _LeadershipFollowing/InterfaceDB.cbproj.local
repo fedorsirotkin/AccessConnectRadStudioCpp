@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.848,C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.h=E:\УД\Interface\Cinema.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.284,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Cinema.cpp=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Form_1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.809,C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1PCH1.h=E:\УД\Interface\PCH.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.772,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.h=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Form_2.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.515,C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1.cbproj=E:\УД\Interface\InterfaceDB.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.772,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.cpp=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Form_2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.345,=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.848,C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.cpp=E:\УД\Interface\Cinema.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.131,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.848,C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Unit1.dfm=E:\УД\Interface\Cinema.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.284,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Cinema.h=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Form_1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.101,=C:\Users\Admin\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.284,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Cinema.dfm=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Form_1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.772,E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Unit1.dfm=E:\VCS\BitBucket\accessconnectradstudiocpp\Interface\Form_2.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

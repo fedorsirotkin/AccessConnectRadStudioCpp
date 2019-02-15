@@ -1,0 +1,16 @@
+﻿[DBGridCinemas]
+Coordinates=117,10,93,33
+Visible=True
+
+[ADOConnectionFilmLibrary]
+Coordinates=268,1,149,33
+
+[]
+Coordinates=133,62,82,33
+
+[ADOTable2]
+Coordinates=10,10,84,159
+
+[DataSource2]
+Coordinates=0,0,114,33
+
